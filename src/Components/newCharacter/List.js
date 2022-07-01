@@ -1,15 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import Character from './Character';
 import Pagination from '@mui/material/Pagination';
-import './List.css';
+import './styles.css';
 
 export default function List (){
     const [characters, setCharacter] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const[currentPageUrl, setCurrentPageUrl] = useState("https://rickandmortyapi.com/api/character");
-    const[nextPageUrl, setNextPageUrl] = useState();
-    const[prevPageUrl, setPrevPageUrl] = useState();
     const[pages, setPages] = useState();
     const[page, setPage] = useState(1);
     
@@ -23,23 +21,12 @@ export default function List (){
 
             setCharacter(results);
             setLoading(false);
-            
-            setNextPageUrl(info.next);
-            setPrevPageUrl(info.prev);
             setPages(info.pages)
         }
 
         fetchData();
     }, [currentPageUrl]);
 
-    const nextPage =()=>{
-        setCurrentPageUrl(nextPageUrl);
-    }
-
-    const prevPage = () =>{
-        setCurrentPageUrl(prevPageUrl);
-    }
-    
     const goToPage = (event, number) =>{
         setPage(number)
         setCurrentPageUrl(`https://rickandmortyapi.com/api/character?page=${number}`)
@@ -48,7 +35,7 @@ export default function List (){
     return (<div>Loading...</div>);
 
     return (
-        <div>
+        <div className="List">
             <Pagination className="pagination" count={pages} page={page} onChange={goToPage} />
             <h2>Characters</h2>
             <div className="row">
